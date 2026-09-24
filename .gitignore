@@ -1,9 +1,6 @@
-# The files with the following extensions and directories with the following names will not commit
 *.pem
-*.key
 *.tfstate
 *.tfstate.backup
-*.tfstate.bak
 .terraform/
 .env
-credentials/
+credentials
