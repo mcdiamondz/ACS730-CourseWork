@@ -1,0 +1,14 @@
+enabled
+● acs730-web.service - ACS730 Lab 2 demo web application
+     Loaded: loaded (/etc/systemd/system/acs730-web.service; enabled; preset: disabled)
+     Active: active (running) since Sat 2026-10-03 02:32:02 UTC; 4min 12s ago
+   Main PID: 1874 (python3)
+      Tasks: 1 (limit: 1059)
+     Memory: 9.6M
+        CPU: 145ms
+     CGroup: /system.slice/acs730-web.service
+             └─1874 /usr/bin/python3 -m http.server 80 --directory /opt/acs730-web
+
+Oct 03 02:32:02 ip-172-31-21-104.ec2.internal systemd[1]: Starting acs730-web.service - ACS730 Lab 2 demo web application...
+Oct 03 02:32:02 ip-172-31-21-104.ec2.internal systemd[1]: Started acs730-web.service - ACS730 Lab 2 demo web application.
+Oct 03 02:33:11 ip-172-31-21-104.ec2.internal python3[1874]: 100.62.75.195 - - [03/Oct/2026 02:33:11] "GET / HTTP/1.1" 200 -
