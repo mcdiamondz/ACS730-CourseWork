@@ -1,0 +1,14 @@
+[
+    {
+        "IpProtocol": "-1",
+        "UserIdGroupPairs": [
+            {
+                "UserId": "305951028316",
+                "GroupId": "sg-047b1d4ebffb6e88e"
+            }
+        ],
+        "IpRanges": [],
+        "Ipv6Ranges": [],
+        "PrefixListIds": []
+    }
+]
