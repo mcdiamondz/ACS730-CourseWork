@@ -1,5 +1,3 @@
-# Lab 4
+# Lab 4 - Docker and a GitHub Actions pipeline
 
-Instructions for this section will be provided in class and on Blackboard when we reach it.
-
-Put your work for Lab 4 in this folder.
+Work in progress: Week 4 (Docker) done, Week 5 (pipeline) follows on branch lab4-pipeline.
