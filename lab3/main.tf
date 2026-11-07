@@ -1,13 +1,13 @@
 terraform {
   required_version = "~> 1.10"
- 
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.70"
     }
   }
- 
+
   backend "s3" {
     bucket       = "acs730-tfstate-305951028316"
     key          = "lab3/terraform.tfstate"
@@ -16,16 +16,16 @@ terraform {
     use_lockfile = true
   }
 }
- 
+
 provider "aws" {
   region = "us-east-1"
 }
- 
+
 variable "greeting" {
   type    = string
   default = "hello from GitHub Actions"
 }
- 
+
 resource "aws_ssm_parameter" "lab3" {
   name  = "/acs730/lab3/greeting"
   type  = "String"
