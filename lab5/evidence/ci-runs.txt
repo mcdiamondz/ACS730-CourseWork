@@ -1,0 +1,10 @@
+completed	success	Lab 5	lab5-ci	lab5-final	pull_request	42343268547	2m12s	2026-11-07T05:33:57Z
+completed	failure	Lab 5	lab5-ci	lab5-final	pull_request	42342860560	14s	2026-11-07T05:28:19Z
+completed	success	Lab 5	lab5-ci	lab5-final	pull_request	42342844200	2m3s	2026-11-07T05:28:03Z
+completed	success	Lab 5	lab5-ci	lab5	pull_request	42337724361	2m9s	2026-11-07T04:16:32Z
+completed	success	Add files via upload	lab5-ci	main	push	42337343028	2m5s	2026-11-07T04:11:36Z
+completed	success	Merge pull request #8 from mcdiamondz/lab5	lab5-ci	main	push	42336960601	2m16s	2026-11-07T04:06:28Z
+completed	success	Lab 5	lab5-ci	lab5	pull_request	42333913481	2m4s	2026-11-07T03:25:03Z
+completed	failure	Lab 5	lab5-ci	lab5	pull_request	42333609033	18s	2026-11-07T03:21:06Z
+completed	success	Lab 5	lab5-ci	lab5	pull_request	42332940190	2m7s	2026-11-07T03:12:46Z
+completed	success	Lab 5	lab5-ci	lab5	pull_request	42332634438	2m9s	2026-11-07T03:09:00Z
