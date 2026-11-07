@@ -7,3 +7,13 @@ credentials
 __pycache__/
 *.pyc
 .pytest_cache/
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+crash.log
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+crash.log
