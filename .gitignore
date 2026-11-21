@@ -17,3 +17,8 @@ crash.log
 *.tfstate.*
 tfplan
 crash.log
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
+*.pem

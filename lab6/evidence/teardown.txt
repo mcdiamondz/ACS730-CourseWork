@@ -1,0 +1,93 @@
+[1mPlan:[0m 0 to add, 0 to change, 3 to destroy.
+[0m
+Changes to Outputs:
+  [31m-[0m[0m first_web_public_ip = "54.196.37.128" [90m-> null[0m[0m
+  [31m-[0m[0m security_group_id   = "sg-00138bbb064b3392d" [90m-> null[0m[0m
+  [31m-[0m[0m web_instance_ids    = [
+      [31m-[0m[0m "i-0d82af737516e24b5",
+      [31m-[0m[0m "i-05ad259ef2c7c7a5a",
+    ] [90m-> null[0m[0m
+  [31m-[0m[0m web_public_ips      = [
+      [31m-[0m[0m "54.196.37.128",
+      [31m-[0m[0m "54.226.194.45",
+    ] [90m-> null[0m[0m
+[0m[1m
+Do you really want to destroy all resources?[0m
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  [1mEnter a value:[0m [0m
+Destroy cancelled.
+snapshot behind the AMI: snap-0465adb8a105b647a
+
+An error occurred (InvalidAMIID.Unavailable) when calling the DeregisterImage operation: The image ID 'ami-04f31f018ec9dcc7b' is no longer available
+remove_bucket: acs730-lab6-ssm-305951028316
+
+== EC2 instances
+   i-05ad259ef2c7c7a5a  running  t3.micro  acs730-lab6-web-1
+      -> aws ec2 terminate-instances --instance-ids i-05ad259ef2c7c7a5a
+   i-0df8284f571ec8a26  running  t3.small  acs730-workstation   (your workstation -- keep this)
+   i-0d82af737516e24b5  running  t3.micro  acs730-lab6-web-0
+      -> aws ec2 terminate-instances --instance-ids i-0d82af737516e24b5
+
+== Your AMIs (and their snapshots)
+   ami-0ee87f80912080b49  secondServer  snapshot snap-0dd23d185a9d841aa
+      -> aws ec2 deregister-image --image-id ami-0ee87f80912080b49
+      -> aws ec2 delete-snapshot --snapshot-id snap-0dd23d185a9d841aa
+
+== Unattached EBS volumes
+
+== Snapshots you own
+   snap-0dd23d185a9d841aa  8GiB  Created by CreateImage(i-0ca5faa48df876f40) for ami-0ee87f80912080b49
+      -> aws ec2 delete-snapshot --snapshot-id snap-0dd23d185a9d841aa
+
+== Non-default security groups
+   sg-0809bd573177a56d7  launch-wizard-5
+      -> aws ec2 delete-security-group --group-id sg-0809bd573177a56d7
+   sg-036f2bc6c40d6aa0b  launch-wizard-7
+      -> aws ec2 delete-security-group --group-id sg-036f2bc6c40d6aa0b
+   sg-085eb4eee0e071de0  launch-wizard-1
+      -> aws ec2 delete-security-group --group-id sg-085eb4eee0e071de0
+   sg-0c4dc77f1c9326e1e  efs-sg-4
+      -> aws ec2 delete-security-group --group-id sg-0c4dc77f1c9326e1e
+   sg-0b8830a355a1e902f  instance-sg-4
+      -> aws ec2 delete-security-group --group-id sg-0b8830a355a1e902f
+   sg-0da498e02667e6f2d  instance-sg-5
+      -> aws ec2 delete-security-group --group-id sg-0da498e02667e6f2d
+   sg-055f77bedfbdf76a2  efs-sg-5
+      -> aws ec2 delete-security-group --group-id sg-055f77bedfbdf76a2
+   sg-0f6f1f9d8b9c6d292  launch-wizard-6
+      -> aws ec2 delete-security-group --group-id sg-0f6f1f9d8b9c6d292
+   sg-0d7cfb8caab298586  instance-sg-3
+      -> aws ec2 delete-security-group --group-id sg-0d7cfb8caab298586
+   sg-0e723123508b7deb4  instance-sg-1
+      -> aws ec2 delete-security-group --group-id sg-0e723123508b7deb4
+   sg-0027e6a8f7b7d283e  efs-sg-1
+      -> aws ec2 delete-security-group --group-id sg-0027e6a8f7b7d283e
+   sg-0ed72eef9561fe49a  launch-wizard-3
+      -> aws ec2 delete-security-group --group-id sg-0ed72eef9561fe49a
+   sg-0a5a115b35839cd3e  instance-sg-2
+      -> aws ec2 delete-security-group --group-id sg-0a5a115b35839cd3e
+   sg-09f674d073f96a4d9  efs-sg-2
+      -> aws ec2 delete-security-group --group-id sg-09f674d073f96a4d9
+   sg-016fda306268006bb  efs-sg-3
+      -> aws ec2 delete-security-group --group-id sg-016fda306268006bb
+   sg-0a799eda6ab30829a  launch-wizard-4
+      -> aws ec2 delete-security-group --group-id sg-0a799eda6ab30829a
+   sg-00138bbb064b3392d  acs730-lab6-sg
+      -> aws ec2 delete-security-group --group-id sg-00138bbb064b3392d
+   sg-0d52f1a9721fcb4a0  efs-sg-6
+      -> aws ec2 delete-security-group --group-id sg-0d52f1a9721fcb4a0
+   sg-0231cbcfb209f3253  launch-wizard-2
+      -> aws ec2 delete-security-group --group-id sg-0231cbcfb209f3253
+   sg-00860f6e7e69a4fa0  instance-sg-6
+      -> aws ec2 delete-security-group --group-id sg-00860f6e7e69a4fa0
+
+== Terraform state files that still track resources
+   ./lab6/terraform/terraform.tfstate  tracks 3 resource(s)
+      -> cd ./lab6/terraform && terraform destroy
+   ./midterm-practice/terraform/terraform.tfstate  tracks 1 resource(s)
+      -> cd ./midterm-practice/terraform && terraform destroy
+
+Review the items above. This script deleted nothing.
+
