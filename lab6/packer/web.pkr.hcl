@@ -32,7 +32,7 @@ variable "ami_name_prefix" {
  
 variable "playbook_file" {
   type    = string
-  default = "../ansible/site.yml"
+  default = "lab6/ansible/site.yml"
 }
  
 locals {
@@ -88,7 +88,7 @@ build {
   # Runs after the role, so /opt/acs730-web already exists and nothing
   # the role manages is overwritten.
   provisioner "file" {
-    source      = "files/index.html"
+    source      = "lab6/packer/files/index.html"
     destination = "/tmp/baked.html"
   }
  
