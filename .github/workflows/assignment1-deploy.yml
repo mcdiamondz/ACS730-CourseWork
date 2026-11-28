@@ -8,6 +8,7 @@ on:
       - .github/workflows/assignment1-deploy.yml
   pull_request:
     paths:
+  workflow_dispatch:
       - assignment1/**
       - .github/workflows/assignment1-deploy.yml
 
