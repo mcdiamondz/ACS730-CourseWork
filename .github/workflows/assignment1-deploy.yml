@@ -67,7 +67,7 @@ jobs:
   apply-dev:
     name: apply dev
     needs: plan-dev
-    if: github.ref == refs/heads/main && github.event_name == push
+    if: github.ref == "refs/heads/main" && github.event_name == "push"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -115,7 +115,7 @@ jobs:
   apply-staging:
     name: apply staging
     needs: plan-staging
-    if: github.ref == refs/heads/main && github.event_name == push
+    if: github.ref == "refs/heads/main" && github.event_name == "push"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -163,7 +163,7 @@ jobs:
   apply-prod:
     name: apply prod
     needs: plan-prod
-    if: github.ref == refs/heads/main && github.event_name == push
+    if: github.ref == "refs/heads/main" && github.event_name == "push"
     runs-on: ubuntu-latest
     defaults:
       run:
