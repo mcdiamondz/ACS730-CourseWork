@@ -19,8 +19,8 @@ locals {
   }
 
   common_tags = {
-    Managed = "terraform"
-    Lab     = "assignment1"
+    Managed     = "terraform"
+    Lab         = "assignment1"
     Environment = var.environment
   }
 }

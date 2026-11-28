@@ -9,13 +9,13 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "Triggers when average CPU exceeds 80% for 2 evaluation periods"
-  
+
   dimensions = {
     InstanceId = aws_instance.web[0].id
   }
-  
+
   alarm_actions = []
   ok_actions    = []
-  
+
   tags = local.common_tags
 }
