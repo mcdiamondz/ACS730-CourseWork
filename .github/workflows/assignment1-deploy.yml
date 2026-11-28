@@ -8,9 +8,9 @@ on:
       - .github/workflows/assignment1-deploy.yml
   pull_request:
     paths:
-  workflow_dispatch:
       - assignment1/**
       - .github/workflows/assignment1-deploy.yml
+  workflow_dispatch:
 
 concurrency:
   group: assignment1-deploy-${{ github.repository }}-${{ github.ref }}
