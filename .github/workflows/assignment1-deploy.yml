@@ -1,0 +1,185 @@
+name: assignment1-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      -  assignment1/**
+      - .github/workflows/assignment1-deploy.yml
+  pull_request:
+    paths:
+      - assignment1/**
+      - .github/workflows/assignment1-deploy.yml
+
+concurrency:
+  group: assignment1-deploy-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: us-east-1
+  TF_IN_AUTOMATION: "true"
+
+jobs:
+  fmt-validate:
+    name: fmt and validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false -input=false
+      - run: terraform validate
+
+  plan-dev:
+    name: plan dev
+    needs: fmt-validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform plan -input=false -no-color
+
+  apply-dev:
+    name: apply dev
+    needs: plan-dev
+    if: github.ref == refs/heads/main && github.event_name == push
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/dev
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform apply -input=false -auto-approve
+
+  plan-staging:
+    name: plan staging
+    needs: apply-dev
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform plan -input=false -no-color
+
+  apply-staging:
+    name: apply staging
+    needs: plan-staging
+    if: github.ref == refs/heads/main && github.event_name == push
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/staging
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform apply -input=false -auto-approve
+
+  plan-prod:
+    name: plan prod
+    needs: apply-staging
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform plan -input=false -no-color
+
+  apply-prod:
+    name: apply prod
+    needs: plan-prod
+    if: github.ref == refs/heads/main && github.event_name == push
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment1/terraform/prod
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10.3
+          terraform_wrapper: false
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform apply -input=false -auto-approve
